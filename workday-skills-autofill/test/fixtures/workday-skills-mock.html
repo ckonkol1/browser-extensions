@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mock Workday Skills Field</title>
+    <style>
+      body { font: 14px system-ui, sans-serif; margin: 24px; }
+      [data-automation-id="selectedItem"] { display: inline-block; margin: 2px; padding: 2px 8px; border: 1px solid #888; border-radius: 12px; }
+      [data-automation-id="activeListContainer"] { border: 1px solid #888; max-width: 300px; }
+      [role="option"] { padding: 4px 8px; cursor: pointer; }
+      [role="option"]:hover { background: #eef; }
+    </style>
+  </head>
+  <body>
+    <!--
+      Imitates Workday's Skills multiselect for local testing. The search box
+      attributes are copied from a live Workday application; the suggestion list
+      and selected-item markup are assumptions, matching the filler's selectors.
+      Like React, it tracks the query from "input" events, not from input.value.
+      URL options: ?stickyList makes Escape leave the suggestion list open;
+      ?searchDelayMs=1500 makes searches slower (default 300).
+    -->
+    <!-- A live run showed chosen values elsewhere on the page also use promptOption markup. -->
+    <div data-automation-id="formField-field-of-study">
+      <label>Field of Study</label>
+      <div data-automation-id="selectedItem">
+        <div data-automation-id="promptOption" data-automation-label="Computer and Information Science">Computer and Information Science</div>
+      </div>
+      <div data-automation-id="promptOption" data-automation-label="Computer and Information Science">Computer and Information Science</div>
+    </div>
+
+    <div data-automation-id="formField-skills">
+      <label for="skills--skills">Type to Add Skills</label>
+      <div data-automation-id="multiSelectContainer">
+        <ul data-automation-id="selectedItemList"></ul>
+        <input
+          id="skills--skills"
+          data-automation-id="searchBox"
+          data-uxi-widget-type="selectinput"
+          placeholder="Search"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <script>
+      // Includes real Workday names seen on a live application, e.g. "Java (Programming Language)".
+      const SKILL_CATALOG = [
+        "Java (Programming Language)", "JavaFX", "JavaScript", "JavaScript Frameworks", "Python",
+        "Structured Query Language (SQL)", "U-SQL", "C Sharp (Programming Language)", "Unity C#",
+        "React.js", "React Native", "Amazon Web Services (AWS)", "Docker (Software)", "Dockerfile",
+        "Event Driven Architecture (EDA)", "Event-Driven Programming", "Kubernetes",
+        "Go (Programming Language)", "Go (Game)",
+      ];
+      const searchKey = (text) => text.toLowerCase().replace(/-/g, " ");
+      const mockOptions = new URLSearchParams(location.search);
+      const SEARCH_DELAY_MS = Number(mockOptions.get("searchDelayMs") ?? 300);
+      const ESCAPE_CLOSES_LIST = !mockOptions.has("stickyList");
+
+      const input = document.getElementById("skills--skills");
+      const selectedList = document.querySelector('[data-automation-id="selectedItemList"]');
+      let query = "";
+      let listbox = null;
+
+      input.addEventListener("input", (event) => { query = event.target.value; });
+
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") setTimeout(() => showResults(query), SEARCH_DELAY_MS);
+        if (event.key === "Escape" && ESCAPE_CLOSES_LIST) closeResults();
+      });
+
+      function showResults(searchTerm) {
+        closeResults();
+        listbox = document.createElement("div");
+        listbox.setAttribute("data-automation-id", "activeListContainer");
+        listbox.setAttribute("role", "listbox");
+        const matches = SKILL_CATALOG.filter((skill) => searchKey(skill).includes(searchKey(searchTerm)));
+        if (matches.length === 0) listbox.textContent = "No Items.";
+        for (const skill of matches) {
+          // A live run showed each suggestion is an option nested in another option.
+          // Which one holds the click handler is a guess; here it is the inner one.
+          const option = document.createElement("div");
+          option.setAttribute("role", "option");
+          const promptOption = document.createElement("div");
+          promptOption.setAttribute("data-automation-id", "promptOption");
+          promptOption.setAttribute("data-automation-label", skill);
+          promptOption.textContent = skill;
+          promptOption.addEventListener("click", () => selectSkill(skill));
+          option.append(promptOption);
+          listbox.append(option);
+        }
+        document.body.append(listbox);
+      }
+
+      function closeResults() {
+        listbox?.remove();
+        listbox = null;
+      }
+
+      function selectSkill(skill) {
+        const item = document.createElement("li");
+        const pill = document.createElement("div");
+        pill.setAttribute("data-automation-id", "selectedItem");
+        const pillOption = document.createElement("div");
+        pillOption.setAttribute("data-automation-id", "promptOption");
+        pillOption.setAttribute("data-automation-label", skill);
+        pillOption.textContent = skill;
+        // Clicking a chosen value removes it, so a filler that mistakes pills for suggestions loses skills.
+        pillOption.addEventListener("click", () => item.remove());
+        pill.append(pillOption);
+        item.append(pill);
+        selectedList.append(item);
+      }
+    </script>
+    <script src="../../extension/shared/skill-matching.js"></script>
+    <script src="../../extension/content/workday-skills-filler.js"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Workday Skills Autofill",
+  "version": "0.1.0",
+  "description": "Fills the Skills section of a Workday job application from a saved list.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "action": {
+    "default_title": "Workday Skills Autofill",
+    "default_popup": "popup/popup.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@workday-skills-autofill",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}

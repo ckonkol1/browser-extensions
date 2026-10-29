@@ -1,0 +1,15 @@
+{
+  "name": "workday-skills-autofill",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome and Firefox extension that fills the Skills section of a Workday job application.",
+  "scripts": {
+    "test": "node --test",
+    "lint": "web-ext lint --source-dir extension",
+    "start:firefox": "web-ext run --source-dir extension",
+    "build": "web-ext build --source-dir extension --artifacts-dir dist --overwrite-dest"
+  },
+  "devDependencies": {
+    "web-ext": "10.8.0"
+  }
+}

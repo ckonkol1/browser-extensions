@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <title>New Tab Redirect – Settings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f4f8;
+      font-family: system-ui, sans-serif;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 420px;
+      max-width: 95vw;
+    }
+    h1 {
+      margin: 0 0 1.5rem;
+      font-size: 1.25rem;
+      color: #1a1a2e;
+    }
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 0.4rem;
+    }
+    input[type="url"] {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input[type="url"]:focus {
+      border-color: #4a90d9;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+    button {
+      padding: 0.5rem 1.25rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    #save-btn {
+      background: #4a90d9;
+      color: #fff;
+    }
+    #save-btn:hover { background: #357abd; }
+    #clear-btn {
+      background: #eee;
+      color: #555;
+    }
+    #clear-btn:hover { background: #ddd; }
+    #status {
+      font-size: 0.85rem;
+      color: #2a9d2a;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>New Tab Redirect Settings</h1>
+    <label for="url-input">Redirect URL</label>
+    <input type="url" id="url-input" placeholder="https://example.com" />
+    <div class="actions">
+      <button id="save-btn">Save</button>
+      <button id="clear-btn">Clear</button>
+      <span id="status"></span>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

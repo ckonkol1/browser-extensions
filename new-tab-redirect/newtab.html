@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <title>New Tab</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #1a1a2e;
+      font-family: sans-serif;
+      color: #eee;
+    }
+    .setup {
+      text-align: center;
+    }
+    .setup h1 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .setup p {
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+    .setup a {
+      color: #7eb8f7;
+    }
+  </style>
+</head>
+<body>
+  <div class="setup" id="setup" hidden>
+    <h1>New Tab Redirect</h1>
+    <p>No redirect URL is configured yet.</p>
+    <p><a id="options-link" href="#">Open Settings</a> to set your redirect URL.</p>
+  </div>
+  <script src="newtab.js"></script>
+</body>
+</html>

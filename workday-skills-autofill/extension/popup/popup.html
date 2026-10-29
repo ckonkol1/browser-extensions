@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Workday Skills Autofill</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <label for="skills">Skills (one per line or comma-separated)</label>
+    <textarea id="skills" rows="10" spellcheck="false"></textarea>
+    <div class="actions">
+      <button id="save" type="button">Save</button>
+      <button id="fill" type="button" class="primary">Fill skills on this page</button>
+    </div>
+    <p id="status" role="status"></p>
+    <ul id="results"></ul>
+    <script src="../shared/skill-matching.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

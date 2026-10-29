@@ -1,0 +1,83 @@
+body {
+  width: 320px;
+  margin: 12px;
+  font: 13px/1.4 system-ui, sans-serif;
+  color: #1f2328;
+  background: #fff;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  font: inherit;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+button {
+  padding: 6px 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.primary {
+  flex: 1;
+  font-weight: 600;
+}
+
+button:disabled {
+  cursor: progress;
+}
+
+#status {
+  margin: 8px 0 4px;
+}
+
+#status.error {
+  color: #b42318;
+}
+
+#results {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.added {
+  color: #1a7f37;
+}
+
+.notFound,
+.notConfirmed {
+  color: #9a6700;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #e6edf3;
+    background: #1c2128;
+  }
+
+  #status.error {
+    color: #ff7b72;
+  }
+
+  .added {
+    color: #3fb950;
+  }
+
+  .notFound,
+  .notConfirmed {
+    color: #d29922;
+  }
+}
